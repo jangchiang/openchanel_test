@@ -1,8 +1,8 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2012                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|  \\    /   O peration     | Version:  12                                    |
+|   \\  /    A nd           | Website:  www.openfoam.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -29,7 +29,9 @@ divSchemes
 {
     div(rhoPhi,U)   Gauss linearUpwind grad(U);
     div(phi,alpha)  Gauss vanLeer;
+    div(phi,alpha.water)  Gauss vanLeer;
     div(phirb,alpha) Gauss linear;
+    div(phirb,alpha.water) Gauss linear;
     div(phi,k)      Gauss upwind;
     div(phi,epsilon) Gauss upwind;
     div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
@@ -54,6 +56,5 @@ wallDist
 {
     method          meshWave;
 }
-
 
 // ************************************************************************* //

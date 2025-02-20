@@ -16,7 +16,6 @@ FoamFile
 
 actions
 (
-    // Create ballast cellSet
     {
         name    ballastCells;
         type    cellSet;
@@ -24,98 +23,4 @@ actions
         source  boxToCell;
         box     (5 0 -1) (15 0.5 1);
     }
-    
-    // Create sleeper cellSets
-    {
-        name    sleeperCells1;
-        type    cellSet;
-        action  new;
-        source  boxToCell;
-        box     (6.5 0.5 -1) (7.5 0.65 1);
-    }
-    {
-        name    sleeperCells2;
-        type    cellSet;
-        action  new;
-        source  boxToCell;
-        box     (9.0 0.5 -1) (10.0 0.65 1);
-    }
-    {
-        name    sleeperCells3;
-        type    cellSet;
-        action  new;
-        source  boxToCell;
-        box     (11.5 0.5 -1) (12.5 0.65 1);
-    }
-    {
-        name    sleeperCells4;
-        type    cellSet;
-        action  new;
-        source  boxToCell;
-        box     (14.0 0.5 -1) (15.0 0.65 1);
-    }
-    
-    // Combine all sleeper cells
-    {
-        name    sleeperCells;
-        type    cellSet;
-        action  new;
-        source  cellToCell;
-        set     sleeperCells1;
-    }
-    {
-        name    sleeperCells;
-        type    cellSet;
-        action  add;
-        source  cellToCell;
-        set     sleeperCells2;
-    }
-    {
-        name    sleeperCells;
-        type    cellSet;
-        action  add;
-        source  cellToCell;
-        set     sleeperCells3;
-    }
-    {
-        name    sleeperCells;
-        type    cellSet;
-        action  add;
-        source  cellToCell;
-        set     sleeperCells4;
-    }
-    
-    // Create rail cellSet
-    {
-        name    railCells;
-        type    cellSet;
-        action  new;
-        source  boxToCell;
-        box     (5 0.65 -1) (15 0.75 1);
-    }
-    
-    // Create cellZones
-    {
-        name    ballast;
-        type    cellZoneSet;
-        action  new;
-        source  setToCellZone;
-        set     ballastCells;
-    }
-    {
-        name    sleepers;
-        type    cellZoneSet;
-        action  new;
-        source  setToCellZone;
-        set     sleeperCells;
-    }
-    {
-        name    rail;
-        type    cellZoneSet;
-        action  new;
-        source  setToCellZone;
-        set     railCells;
-    }
 );
-
-// ************************************************************************* //

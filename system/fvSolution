@@ -1,8 +1,8 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2012                                 |
-|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|  \\    /   O peration     | Version:  12                                    |
+|   \\  /    A nd           | Website:  www.openfoam.org                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
 FoamFile
@@ -62,6 +62,12 @@ solvers
         relTol          0;
     }
     
+    UFinal
+    {
+        $U;
+        relTol          0;
+    }
+    
     k
     {
         solver          smoothSolver;
@@ -70,7 +76,27 @@ solvers
         relTol          0;
     }
     
+    kFinal
+    {
+        $k;
+        relTol          0;
+    }
+    
     epsilon
+    {
+        solver          smoothSolver;
+        smoother        symGaussSeidel;
+        tolerance       1e-08;
+        relTol          0;
+    }
+    
+    epsilonFinal
+    {
+        $epsilon;
+        relTol          0;
+    }
+    
+    "omega.*"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;

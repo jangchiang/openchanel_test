@@ -15,7 +15,9 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     interFoam;
+application     foamRun;
+
+solver          incompressibleVoF;
 
 startFrom       startTime;
 
@@ -55,32 +57,11 @@ maxDeltaT       1;
 // For tracking flow rates
 functions
 {
-    // Using standard patchFlowRate function
+    // Inlet flow monitoring
     inletFlow
     {
-        type            patchFlowRate;
-        libs            (fieldFunctionObjects);
-        writeControl    timeStep;
-        writeInterval   1;
-        log             true;
-        patches         (inlet);
-    }
-    
-    outletFlow
-    {
-        type            patchFlowRate;
-        libs            (fieldFunctionObjects);
-        writeControl    timeStep;
-        writeInterval   1;
-        log             true;
-        patches         (outlet);
-    }
-    
-    // Additional monitoring functions 
-    inletFlowRate
-    {
         type            surfaceFieldValue;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
         writeControl    timeStep;
         writeInterval   1;
         log             true;
@@ -94,10 +75,11 @@ functions
         );
     }
     
-    outletFlowRate
+    // Outlet flow monitoring
+    outletFlow
     {
         type            surfaceFieldValue;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
         writeControl    timeStep;
         writeInterval   1;
         log             true;
@@ -109,6 +91,32 @@ functions
         (
             phi
         );
+    }
+    
+    // Courant number monitoring
+    co
+    {
+        type            CourantNo;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    timeStep;
+        writeInterval   1;
+        log             true;
+    }
+    
+    // Vorticity calculation
+    vort
+    {
+        type            vorticity;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+    }
+    
+    // Wall shear stress monitoring
+    shearStress
+    {
+        type            wallShearStress;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
     }
 }
 
